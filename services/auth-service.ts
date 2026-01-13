@@ -1,10 +1,8 @@
 "use server";
 
-import { ROUTES } from "@/lib/constants";
 import { createClient } from "@/lib/supabase/server";
 import { User } from "@/types";
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 
 export const login = async (data: { email: string; password: string }) => {
   const supabase = await createClient();
@@ -14,53 +12,41 @@ export const login = async (data: { email: string; password: string }) => {
   if (error) {
     throw error;
   }
-
-  return redirect(ROUTES.DASHBOARD);
 };
 
-export const signup = async (formData: FormData) => {
+export const signup = async (data: { email: string; password: string }) => {
   const origin = (await headers()).get("origin");
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
   const supabase = await createClient();
 
   const { error } = await supabase.auth.signUp({
-    email,
-    password,
+    email: data.email,
+    password: data.password,
     options: {
-      emailRedirectTo: `${origin}/auth/callback`,
+      emailRedirectTo: `${origin}/callback`,
     },
   });
 
   if (error) {
-    return redirect(`/sign-up?message=${error.message}`);
+    throw error;
   }
-
-  return redirect("/sign-up-success");
 };
 
-export const forgotPassword = async (formData: FormData) => {
+export const forgotPassword = async (email: string) => {
   const origin = (await headers()).get("origin");
-  const email = formData.get("email") as string;
   const supabase = await createClient();
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${origin}/auth/callback?next=/update-password`,
+    redirectTo: `${origin}/callback?next=/update-password`,
   });
 
   if (error) {
-    return redirect(`/forgot-password?message=${error.message}`);
+    throw error;
   }
-
-  return redirect(
-    "/forgot-password?message=Check email to continue sign in process"
-  );
 };
 
 export const signOut = async () => {
   const supabase = await createClient();
   await supabase.auth.signOut();
-  return redirect("/login");
 };
 
 export const getSession = async () => {

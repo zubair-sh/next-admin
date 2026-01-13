@@ -4,9 +4,10 @@ export const ROUTES = {
   HOME: "/",
   LOGIN: "/login",
   SIGN_UP: "/sign-up",
+  SIGN_UP_SUCCESS: "/sign-up-success",
   FORGOT_PASSWORD: "/forgot-password",
   DASHBOARD: "/dashboard",
-  AUTH_CALLBACK: "/auth/callback",
+  AUTH_CALLBACK: "/callback",
 } as const;
 
 export const API_ROUTES = {

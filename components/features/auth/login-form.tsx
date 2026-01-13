@@ -17,6 +17,8 @@ import * as z from "zod";
 import { login } from "@/services/auth-service";
 import { toast } from "sonner";
 import { useState } from "react";
+import { ROUTES } from "@/lib/constants";
+import { useRouter } from "next/navigation";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -29,6 +31,7 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -47,6 +50,7 @@ export function LoginForm({
     setIsLoading(true);
     try {
       await login(data);
+      router.replace(ROUTES.DASHBOARD);
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Invalid credentials"
