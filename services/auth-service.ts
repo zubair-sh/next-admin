@@ -3,6 +3,7 @@
 import { ROUTES } from "@/lib/constants";
 import { createClient } from "@/lib/supabase/server";
 import { User } from "@/types";
+import { EmailOtpType } from "@supabase/supabase-js";
 import { headers } from "next/headers";
 
 export const login = async (data: { email: string; password: string }) => {
@@ -63,6 +64,27 @@ export const signOut = async () => {
   await supabase.auth.signOut();
 };
 
+export const loginWithCode = async (code: string) => {
+  const supabase = await createClient();
+  const { error } = await supabase.auth.exchangeCodeForSession(code);
+  if (error) {
+    throw error;
+  }
+};
+
+export const verifyOtp = async (type: string, tokenHash: string) => {
+  const supabase = await createClient();
+
+  const { error } = await supabase.auth.verifyOtp({
+    type: type as EmailOtpType,
+    token_hash: tokenHash,
+  });
+
+  if (error) {
+    throw error;
+  }
+};
+
 export const getSession = async () => {
   const supabase = await createClient();
   const {
@@ -71,7 +93,7 @@ export const getSession = async () => {
   return session;
 };
 
-export const getUser = async (): Promise<User | null> => {
+export const getCurrentUser = async (): Promise<User | null> => {
   const supabase = await createClient();
   const {
     data: { user },
@@ -79,12 +101,5 @@ export const getUser = async (): Promise<User | null> => {
 
   if (!user) return null;
 
-  return {
-    id: user.id,
-    email: user.email,
-    created_at: user.created_at,
-    updated_at: user.updated_at,
-    full_name: user.user_metadata?.full_name,
-    avatar_url: user.user_metadata?.avatar_url,
-  } as User;
+  return user;
 };

@@ -1,6 +1,7 @@
 "use client";
 
 import { createClient } from "@/lib/supabase/client";
+import { getCurrentUser } from "@/services/auth-service";
 import { User } from "@/types";
 import { useEffect, useState } from "react";
 
@@ -9,22 +10,11 @@ export function useUser() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const supabase = createClient();
-
     const getUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      const user = await getCurrentUser();
 
       if (user) {
-        setUser({
-          id: user.id,
-          email: user.email,
-          created_at: user.created_at,
-          updated_at: user.updated_at,
-          full_name: user.user_metadata?.full_name,
-          avatar_url: user.user_metadata?.avatar_url,
-        } as User);
+        setUser(user);
       } else {
         setUser(null);
       }
@@ -33,17 +23,11 @@ export function useUser() {
 
     getUser();
 
+    const supabase = createClient();
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (event, session) => {
         if (session?.user) {
-          setUser({
-            id: session.user.id,
-            email: session.user.email,
-            created_at: session.user.created_at,
-            updated_at: session.user.updated_at,
-            full_name: session.user.user_metadata?.full_name,
-            avatar_url: session.user.user_metadata?.avatar_url,
-          } as User);
+          setUser(session.user);
         } else {
           setUser(null);
         }

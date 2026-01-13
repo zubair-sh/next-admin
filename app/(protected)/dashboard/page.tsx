@@ -1,19 +1,12 @@
-import { redirect } from "next/navigation";
-
-import { createClient } from "@/lib/supabase/server";
+"use client";
 import { InfoIcon } from "lucide-react";
-import { FetchDataSteps } from "@/components/tutorial/fetch-data-steps";
 import { Suspense } from "react";
+import { useUser } from "@/hooks/use-user";
 
-async function UserDetails() {
-  const supabase = await createClient();
-  const { data, error } = await supabase.auth.getClaims();
+function UserDetails() {
+  const user = useUser();
 
-  if (error || !data?.claims) {
-    redirect("/login");
-  }
-
-  return JSON.stringify(data.claims, null, 2);
+  return JSON.stringify(user, null, 2);
 }
 
 export default function dashboardPage() {
@@ -33,10 +26,6 @@ export default function dashboardPage() {
             <UserDetails />
           </Suspense>
         </pre>
-      </div>
-      <div>
-        <h2 className="font-bold text-2xl mb-4">Next steps</h2>
-        <FetchDataSteps />
       </div>
     </div>
   );
