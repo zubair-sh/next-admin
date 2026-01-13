@@ -40,7 +40,7 @@ export const forgotPassword = async (data: { email: string }) => {
   const supabase = await createClient();
 
   const { error } = await supabase.auth.resetPasswordForEmail(data.email, {
-    redirectTo: `${origin}/${ROUTES.UPDATE_PASSWORD}`,
+    redirectTo: `${origin}${ROUTES.CALLBACK}?next=${ROUTES.UPDATE_PASSWORD}`,
   });
 
   if (error) {

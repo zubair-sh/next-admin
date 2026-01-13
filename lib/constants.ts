@@ -8,8 +8,21 @@ export const ROUTES = {
   FORGOT_PASSWORD: "/forgot-password",
   UPDATE_PASSWORD: "/update-password",
   DASHBOARD: "/dashboard",
+  CALLBACK: "/callback",
 } as const;
 
 export const API_ROUTES = {
   AUTH_CONFIRM: "/auth/confirm",
 } as const;
+
+export const PUBLIC_ROUTES = [
+  "/",
+  "/login",
+  "/sign-up",
+  "/sign-up-success",
+  "/forgot-password",
+  "/update-password",
+  "/auth",
+  "/error",
+  "/callback",
+];
