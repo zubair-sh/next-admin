@@ -20,12 +20,12 @@ import { useState } from "react";
 import { ROUTES } from "@/lib/constants";
 import { useRouter } from "next/navigation";
 
-const loginSchema = z.object({
+const schema = z.object({
   email: z.string().email("Please enter a valid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-type LoginFormValues = z.infer<typeof loginSchema>;
+type FormValues = z.infer<typeof schema>;
 
 export function LoginForm({
   className,
@@ -38,15 +38,15 @@ export function LoginForm({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<FormValues>({
+    resolver: zodResolver(schema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = async (data: LoginFormValues) => {
+  const onSubmit = async (data: FormValues) => {
     setIsLoading(true);
     try {
       await login(data);

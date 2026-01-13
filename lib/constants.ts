@@ -6,8 +6,8 @@ export const ROUTES = {
   SIGN_UP: "/sign-up",
   SIGN_UP_SUCCESS: "/sign-up-success",
   FORGOT_PASSWORD: "/forgot-password",
+  UPDATE_PASSWORD: "/update-password",
   DASHBOARD: "/dashboard",
-  AUTH_CALLBACK: "/callback",
 } as const;
 
 export const API_ROUTES = {

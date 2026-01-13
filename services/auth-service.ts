@@ -1,5 +1,6 @@
 "use server";
 
+import { ROUTES } from "@/lib/constants";
 import { createClient } from "@/lib/supabase/server";
 import { User } from "@/types";
 import { headers } from "next/headers";
@@ -7,7 +8,10 @@ import { headers } from "next/headers";
 export const login = async (data: { email: string; password: string }) => {
   const supabase = await createClient();
 
-  const { error } = await supabase.auth.signInWithPassword(data);
+  const { error } = await supabase.auth.signInWithPassword({
+    email: data.email,
+    password: data.password,
+  });
 
   if (error) {
     throw error;
@@ -22,7 +26,7 @@ export const signup = async (data: { email: string; password: string }) => {
     email: data.email,
     password: data.password,
     options: {
-      emailRedirectTo: `${origin}/callback`,
+      emailRedirectTo: `${origin}/${ROUTES.DASHBOARD}`,
     },
   });
 
@@ -31,13 +35,23 @@ export const signup = async (data: { email: string; password: string }) => {
   }
 };
 
-export const forgotPassword = async (email: string) => {
+export const forgotPassword = async (data: { email: string }) => {
   const origin = (await headers()).get("origin");
   const supabase = await createClient();
 
-  const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${origin}/callback?next=/update-password`,
+  const { error } = await supabase.auth.resetPasswordForEmail(data.email, {
+    redirectTo: `${origin}/${ROUTES.UPDATE_PASSWORD}`,
   });
+
+  if (error) {
+    throw error;
+  }
+};
+
+export const updatePassword = async (data: { password: string }) => {
+  const supabase = await createClient();
+
+  const { error } = await supabase.auth.updateUser({ password: data.password });
 
   if (error) {
     throw error;
