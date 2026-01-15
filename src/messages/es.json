@@ -14,6 +14,15 @@
     "password": "Contraseña",
     "confirmPassword": "Confirmar Contraseña"
   },
+  "Validation": {
+    "email": "introduce una dirección de correo electrónico válida",
+    "min6": "debe tener al menos 6 caracteres",
+    "passwordsDontMatch": "las contraseñas no coinciden",
+    "passwordUppercase": "debe contener al menos una letra mayúscula",
+    "passwordLowercase": "debe contener al menos una letra minúscula",
+    "passwordNumber": "debe contener al menos un número",
+    "passwordSpecial": "debe contener al menos un carácter especial"
+  },
   "Auth": {
     "login": {
       "title": "Iniciar Sesión",

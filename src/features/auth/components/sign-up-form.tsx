@@ -21,15 +21,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
 import { signup } from "@/features/auth/actions";
+import { emailSchema, passwordSchema } from "../schemas";
 
 const schema = z
   .object({
-    email: z.string().email("Please enter a valid email address"),
-    password: z.string().min(6, "Password must be at least 6 characters"),
-    repeatPassword: z.string().min(6, "Password must be at least 6 characters"),
+    email: emailSchema,
+    password: passwordSchema,
+    repeatPassword: passwordSchema,
   })
   .refine((data) => data.password === data.repeatPassword, {
-    message: "Passwords don't match",
+    message: "passwordsDontMatch",
     path: ["repeatPassword"],
   });
 

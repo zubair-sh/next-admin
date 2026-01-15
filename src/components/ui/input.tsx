@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
+import { useDictionary } from "@/hooks/use-dictionary";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -11,6 +12,8 @@ export interface InputProps
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, label, error, id, ...props }, ref) => {
+    const { Validation } = useDictionary();
+
     return (
       <div className="grid gap-2">
         {label && <Label htmlFor={id}>{label}</Label>}
@@ -25,7 +28,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           {...props}
         />
-        {error && <p className="text-sm text-red-500">{error}</p>}
+        {error && (
+          <p className="text-sm text-red-500">
+            {Validation[error as keyof typeof Validation] || error}
+          </p>
+        )}
       </div>
     );
   }

@@ -14,6 +14,15 @@
     "password": "Password",
     "confirmPassword": "Confirm Password"
   },
+  "Validation": {
+    "invalid": "enter a valid email address",
+    "min6": "must be at least 6 characters",
+    "passwordsDontMatch": "passwords don't match",
+    "passwordUppercase": "must contain at least one uppercase letter",
+    "passwordLowercase": "must contain at least one lowercase letter",
+    "passwordNumber": "must contain at least one number",
+    "passwordSpecial": "must contain at least one special character"
+  },
   "Auth": {
     "login": {
       "title": "Login",

@@ -19,9 +19,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
+import { emailSchema } from "../schemas";
 
 const schema = z.object({
-  email: z.string().email("Please enter a valid email address"),
+  email: emailSchema,
 });
 
 type FormValues = z.infer<typeof schema>;

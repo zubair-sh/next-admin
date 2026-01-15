@@ -21,10 +21,11 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { ROUTES } from "@/lib/constants";
 import { useRouter } from "next/navigation";
+import { emailSchema, passwordSchema } from "../schemas";
 
 const schema = z.object({
-  email: z.string().email("Please enter a valid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  email: emailSchema,
+  password: passwordSchema,
 });
 
 type FormValues = z.infer<typeof schema>;

@@ -20,9 +20,10 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { updatePassword } from "@/features/auth/actions";
 import { ROUTES } from "@/lib/constants";
+import { passwordSchema } from "../schemas";
 
 const schema = z.object({
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  password: passwordSchema,
 });
 
 type FormValues = z.infer<typeof schema>;
