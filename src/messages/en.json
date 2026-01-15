@@ -1,11 +1,11 @@
 {
-  "Dashboard": {
+  "dashboard": {
     "title": "Next Admin",
     "overview": "Overview",
     "team": "Team",
     "settings": "Settings"
   },
-  "Header": {
+  "header": {
     "profile": "Profile",
     "logout": "Log out"
   }

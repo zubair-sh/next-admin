@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
+import { useDictionary } from "@/hooks/use-dictionary";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,8 +24,7 @@ import Link from "next/link";
 
 export function UserMenu() {
   const { user } = useUser();
-  const t = useTranslations("Header");
-  const tDash = useTranslations("Dashboard");
+  const dictionary = useDictionary();
 
   if (!user) return null;
 
@@ -54,20 +53,20 @@ export function UserMenu() {
           <DropdownMenuItem asChild>
             <Link href="/dashboard/profile">
               <User className="mr-2 h-4 w-4" />
-              <span>{t("profile")}</span>
+              <span>{dictionary.header.profile}</span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link href="/dashboard/settings">
               <Settings className="mr-2 h-4 w-4" />
-              <span>{tDash("settings")}</span>
+              <span>{dictionary.dashboard.settings}</span>
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => signOut()}>
           <LogOut className="mr-2 h-4 w-4" />
-          <span>{t("logout")}</span>
+          <span>{dictionary.header.logout}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

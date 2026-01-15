@@ -11,7 +11,7 @@ import {
   ChevronLeft,
   Users,
 } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useDictionary } from "@/hooks/use-dictionary";
 
 const iconClasses = "h-5 w-5";
 
@@ -22,21 +22,21 @@ interface SidebarProps {
 
 export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
   const pathname = usePathname();
-  const t = useTranslations("Dashboard");
+  const dictionary = useDictionary();
 
   const navItems = [
     {
-      title: t("overview"),
+      title: dictionary.dashboard.overview,
       href: "/dashboard",
       icon: LayoutDashboard,
     },
     {
-      title: t("team"),
+      title: dictionary.dashboard.team,
       href: "/dashboard/team",
       icon: Users,
     },
     {
-      title: t("settings"),
+      title: dictionary.dashboard.settings,
       href: "/dashboard/settings",
       icon: Settings,
     },
@@ -52,7 +52,7 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
       <div className="flex h-16 items-center justify-between px-4 border-b">
         {!isCollapsed && (
           <div className="flex items-center gap-2 font-semibold">
-            <span>{t("title")}</span>
+            <span>{dictionary.dashboard.title}</span>
           </div>
         )}
         <Button
