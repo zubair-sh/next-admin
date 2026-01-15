@@ -1,7 +1,7 @@
 "use client";
 
 import { createClient } from "@/lib/supabase/client";
-import { getCurrentUser } from "@/services/auth-service";
+import { getCurrentUser } from "@/features/auth/actions";
 import { User } from "@/types";
 import { useEffect, useState } from "react";
 

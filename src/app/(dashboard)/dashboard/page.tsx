@@ -1,13 +1,5 @@
 "use client";
 import { InfoIcon } from "lucide-react";
-import { Suspense } from "react";
-import { useUser } from "@/hooks/use-user";
-
-function UserDetails() {
-  const user = useUser();
-
-  return JSON.stringify(user, null, 2);
-}
 
 export default function dashboardPage() {
   return (
@@ -18,14 +10,6 @@ export default function dashboardPage() {
           This is a dashboard page that you can only see as an authenticated
           user
         </div>
-      </div>
-      <div className="flex flex-col gap-2 items-start">
-        <h2 className="font-bold text-2xl mb-4">Your user details</h2>
-        <pre className="text-xs font-mono p-3 rounded border max-h-32 overflow-auto">
-          <Suspense>
-            <UserDetails />
-          </Suspense>
-        </pre>
       </div>
     </div>
   );

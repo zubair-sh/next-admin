@@ -15,14 +15,12 @@ export const API_ROUTES = {
   AUTH_CONFIRM: "/auth/confirm",
 } as const;
 
-export const PUBLIC_ROUTES = [
-  "/",
+export const PUBLIC_ROUTES = ["/", "/error", "/callback"];
+
+export const AUTH_ROUTES = [
   "/login",
   "/sign-up",
   "/sign-up-success",
   "/forgot-password",
   "/update-password",
-  "/auth",
-  "/error",
-  "/callback",
 ];

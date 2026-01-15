@@ -1,4 +1,4 @@
-import { verifyOtp } from "@/services/auth-service";
+import { verifyOtp } from "@/features/auth/actions";
 import { redirect } from "next/navigation";
 import { type NextRequest } from "next/server";
 

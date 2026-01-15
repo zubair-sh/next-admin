@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useState } from "react";
-import { forgotPassword } from "@/services/auth-service";
+import { forgotPassword } from "@/features/auth/actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";

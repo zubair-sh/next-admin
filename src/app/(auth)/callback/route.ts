@@ -1,4 +1,4 @@
-import { loginWithCode } from "@/services/auth-service";
+import { loginWithCode } from "@/features/auth/actions";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {

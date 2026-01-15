@@ -1,4 +1,4 @@
-import { AuthButton } from "@/components/features/auth/auth-button";
+import { AuthButton } from "@/features/auth/components/auth-button";
 import { ThemeSwitcher } from "@/components/shared/theme-switcher";
 import Link from "next/link";
 

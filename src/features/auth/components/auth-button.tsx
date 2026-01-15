@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { LogoutButton } from "./logout-button";
-import { useUser } from "@/hooks/use-user";
+import { useUser } from "@/features/auth/hooks/use-user";
 
 export function AuthButton() {
   const { user } = useUser();

@@ -16,7 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { updatePassword } from "@/services/auth-service";
+import { updatePassword } from "@/features/auth/actions";
 import { ROUTES } from "@/lib/constants";
 
 const schema = z.object({
