@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { User } from "@/types";
 import { EmailOtpType } from "@supabase/supabase-js";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 export const login = async (data: { email: string; password: string }) => {
   const supabase = await createClient();
@@ -62,6 +63,7 @@ export const updatePassword = async (data: { password: string }) => {
 export const signOut = async () => {
   const supabase = await createClient();
   await supabase.auth.signOut();
+  redirect(ROUTES.LOGIN);
 };
 
 export const loginWithCode = async (code: string) => {

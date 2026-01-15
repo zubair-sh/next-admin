@@ -11,26 +11,9 @@ import {
   ChevronLeft,
   Users,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const iconClasses = "h-5 w-5";
-
-const navItems = [
-  {
-    title: "Overview",
-    href: "/dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    title: "Team",
-    href: "/dashboard/team",
-    icon: Users,
-  },
-  {
-    title: "Settings",
-    href: "/dashboard/settings",
-    icon: Settings,
-  },
-];
 
 interface SidebarProps {
   isCollapsed: boolean;
@@ -39,6 +22,25 @@ interface SidebarProps {
 
 export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
   const pathname = usePathname();
+  const t = useTranslations("Dashboard");
+
+  const navItems = [
+    {
+      title: t("overview"),
+      href: "/dashboard",
+      icon: LayoutDashboard,
+    },
+    {
+      title: t("team"),
+      href: "/dashboard/team",
+      icon: Users,
+    },
+    {
+      title: t("settings"),
+      href: "/dashboard/settings",
+      icon: Settings,
+    },
+  ];
 
   return (
     <aside
@@ -50,7 +52,7 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
       <div className="flex h-16 items-center justify-between px-4 border-b">
         {!isCollapsed && (
           <div className="flex items-center gap-2 font-semibold">
-            <span>Next Admin</span>
+            <span>{t("title")}</span>
           </div>
         )}
         <Button

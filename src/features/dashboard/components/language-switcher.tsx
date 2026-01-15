@@ -8,8 +8,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Globe } from "lucide-react";
+import { setLocale } from "../actions";
+import { useRouter } from "next/navigation";
 
 export function LanguageSwitcher() {
+  const router = useRouter();
+
+  const handleLanguageChange = async (locale: string) => {
+    await setLocale(locale);
+    router.refresh();
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -19,9 +28,12 @@ export function LanguageSwitcher() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem>English</DropdownMenuItem>
-        <DropdownMenuItem>Español</DropdownMenuItem>
-        <DropdownMenuItem>Français</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => handleLanguageChange("en")}>
+          English
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => handleLanguageChange("es")}>
+          Español
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
