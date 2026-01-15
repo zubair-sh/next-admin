@@ -53,20 +53,20 @@ export function UserMenu() {
           <DropdownMenuItem asChild>
             <Link href="/dashboard/profile">
               <User className="mr-2 h-4 w-4" />
-              <span>{dictionary.header.profile}</span>
+              <span>{dictionary.Header.profile}</span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link href="/dashboard/settings">
               <Settings className="mr-2 h-4 w-4" />
-              <span>{dictionary.dashboard.settings}</span>
+              <span>{dictionary.Dashboard.settings}</span>
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => signOut()}>
           <LogOut className="mr-2 h-4 w-4" />
-          <span>{dictionary.header.logout}</span>
+          <span>{dictionary.Header.logout}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

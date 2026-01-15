@@ -1,12 +1,55 @@
 {
-  "dashboard": {
+  "Dashboard": {
     "title": "Next Admin",
     "overview": "Overview",
     "team": "Team",
     "settings": "Settings"
   },
-  "header": {
+  "Header": {
     "profile": "Profile",
     "logout": "Log out"
+  },
+  "Common": {
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password"
+  },
+  "Auth": {
+    "login": {
+      "title": "Login",
+      "description": "Enter your email below to login to your account",
+      "forgotPassword": "Forgot your password?",
+      "submit": "Login",
+      "submitting": "Logging in...",
+      "noAccount": "Don't have an account?",
+      "signupLink": "Sign up",
+      "emailPlaceholder": "m@example.com"
+    },
+    "signup": {
+      "title": "Sign up",
+      "description": "Create a new account",
+      "submit": "Sign up",
+      "submitting": "Creating an account...",
+      "hasAccount": "Already have an account?",
+      "loginLink": "Login"
+    },
+    "forgotPassword": {
+      "title": "Reset Your Password",
+      "description": "Type in your email and we'll send you a link to reset your password",
+      "submit": "Send reset email",
+      "submitting": "Sending...",
+      "successTitle": "Check Your Email",
+      "successDescription": "Password reset instructions sent",
+      "successMessage": "If you registered using your email and password, you will receive a password reset email.",
+      "backToLogin": "Login",
+      "hasAccount": "Already have an account?"
+    },
+    "updatePassword": {
+      "title": "Reset Your Password",
+      "description": "Please enter your new password below.",
+      "submit": "Save new password",
+      "submitting": "Saving...",
+      "placeholder": "New password"
+    }
   }
 }

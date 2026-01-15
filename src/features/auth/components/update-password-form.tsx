@@ -1,5 +1,7 @@
 "use client";
 
+import { useDictionary } from "@/hooks/use-dictionary";
+
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -31,6 +33,7 @@ export function UpdatePasswordForm({
 }: React.ComponentPropsWithoutRef<"div">) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const dictionary = useDictionary();
 
   const {
     register,
@@ -61,9 +64,11 @@ export function UpdatePasswordForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">Reset Your Password</CardTitle>
+          <CardTitle className="text-2xl">
+            {dictionary.Auth.updatePassword.title}
+          </CardTitle>
           <CardDescription>
-            Please enter your new password below.
+            {dictionary.Auth.updatePassword.description}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -72,13 +77,15 @@ export function UpdatePasswordForm({
               <Input
                 id="password"
                 type="password"
-                placeholder="New password"
-                label="Password"
+                placeholder={dictionary.Auth.updatePassword.placeholder}
+                label={dictionary.Common.password}
                 error={errors.password?.message}
                 {...register("password")}
               />
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "Saving..." : "Save new password"}
+                {isLoading
+                  ? dictionary.Auth.updatePassword.submitting
+                  : dictionary.Auth.updatePassword.submit}
               </Button>
             </div>
           </form>

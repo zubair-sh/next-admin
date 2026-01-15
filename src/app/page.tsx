@@ -1,4 +1,3 @@
-import { AuthButton } from "@/features/auth/components/auth-button";
 import { ThemeSwitcher } from "@/components/shared/theme-switcher";
 import Link from "next/link";
 
@@ -11,7 +10,6 @@ export default function Home() {
             <div className="flex gap-5 items-center font-semibold">
               <Link href={"/"}>Next.js Starter</Link>
             </div>
-            <AuthButton />
           </div>
         </nav>
 

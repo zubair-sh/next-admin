@@ -1,5 +1,7 @@
 "use client";
 
+import { useDictionary } from "@/hooks/use-dictionary";
+
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,6 +32,7 @@ export function ForgotPasswordForm({
 }: React.ComponentPropsWithoutRef<"div">) {
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const dictionary = useDictionary();
 
   const {
     register,
@@ -61,23 +64,27 @@ export function ForgotPasswordForm({
       {success ? (
         <Card>
           <CardHeader>
-            <CardTitle className="text-2xl">Check Your Email</CardTitle>
-            <CardDescription>Password reset instructions sent</CardDescription>
+            <CardTitle className="text-2xl">
+              {dictionary.Auth.forgotPassword.successTitle}
+            </CardTitle>
+            <CardDescription>
+              {dictionary.Auth.forgotPassword.successDescription}
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">
-              If you registered using your email and password, you will receive
-              a password reset email.
+              {dictionary.Auth.forgotPassword.successMessage}
             </p>
           </CardContent>
         </Card>
       ) : (
         <Card>
           <CardHeader>
-            <CardTitle className="text-2xl">Reset Your Password</CardTitle>
+            <CardTitle className="text-2xl">
+              {dictionary.Auth.forgotPassword.title}
+            </CardTitle>
             <CardDescription>
-              Type in your email and we&apos;ll send you a link to reset your
-              password
+              {dictionary.Auth.forgotPassword.description}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -87,18 +94,20 @@ export function ForgotPasswordForm({
                   id="email"
                   type="email"
                   placeholder="m@example.com"
-                  label="Email"
+                  label={dictionary.Common.email}
                   error={errors.email?.message}
                   {...register("email")}
                 />
                 <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? "Sending..." : "Send reset email"}
+                  {isLoading
+                    ? dictionary.Auth.forgotPassword.submitting
+                    : dictionary.Auth.forgotPassword.submit}
                 </Button>
               </div>
               <div className="mt-4 text-center text-sm">
-                Already have an account?{" "}
+                {dictionary.Auth.forgotPassword.hasAccount}{" "}
                 <Link href="/login" className="underline underline-offset-4">
-                  Login
+                  {dictionary.Auth.forgotPassword.backToLogin}
                 </Link>
               </div>
             </form>

@@ -1,12 +1,55 @@
 {
-  "dashboard": {
+  "Dashboard": {
     "title": "Next Admin",
     "overview": "Visión general",
     "team": "Equipo",
     "settings": "Configuración"
   },
-  "header": {
+  "Header": {
     "profile": "Perfil",
     "logout": "Cerrar sesión"
+  },
+  "Common": {
+    "email": "Correo",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar Contraseña"
+  },
+  "Auth": {
+    "login": {
+      "title": "Iniciar Sesión",
+      "description": "Ingresa tu correo para iniciar sesión en tu cuenta",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "submit": "Iniciar Sesión",
+      "submitting": "Iniciando...",
+      "noAccount": "¿No tienes una cuenta?",
+      "signupLink": "Regístrate",
+      "emailPlaceholder": "m@ejemplo.com"
+    },
+    "signup": {
+      "title": "Regístrate",
+      "description": "Crea una nueva cuenta",
+      "submit": "Regístrate",
+      "submitting": "Creando cuenta...",
+      "hasAccount": "¿Ya tienes una cuenta?",
+      "loginLink": "Inicia Sesión"
+    },
+    "forgotPassword": {
+      "title": "Restablecer Contraseña",
+      "description": "Escribe tu correo y te enviaremos un enlace para restablecer tu contraseña",
+      "submit": "Enviar correo",
+      "submitting": "Enviando...",
+      "successTitle": "Revisa tu Correo",
+      "successDescription": "Instrucciones enviadas",
+      "successMessage": "Si te registraste con tu correo, recibirás un mensaje para restablecer tu contraseña.",
+      "backToLogin": "Iniciar Sesión",
+      "hasAccount": "¿Ya tienes una cuenta?"
+    },
+    "updatePassword": {
+      "title": "Restablecer Contraseña",
+      "description": "Ingresa tu nueva contraseña continuación.",
+      "submit": "Guardar contraseña",
+      "submitting": "Guardando...",
+      "placeholder": "Nueva contraseña"
+    }
   }
 }

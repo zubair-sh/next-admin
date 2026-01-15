@@ -1,5 +1,7 @@
 "use client";
 
+import { useDictionary } from "@/hooks/use-dictionary";
+
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -39,6 +41,7 @@ export function SignUpForm({
 }: React.ComponentPropsWithoutRef<"div">) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const dictionary = useDictionary();
 
   const {
     register,
@@ -71,8 +74,12 @@ export function SignUpForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">Sign up</CardTitle>
-          <CardDescription>Create a new account</CardDescription>
+          <CardTitle className="text-2xl">
+            {dictionary.Auth.signup.title}
+          </CardTitle>
+          <CardDescription>
+            {dictionary.Auth.signup.description}
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -80,7 +87,7 @@ export function SignUpForm({
               <Input
                 id="email"
                 type="email"
-                label="Email"
+                label={dictionary.Common.email}
                 placeholder="m@example.com"
                 error={errors.email?.message}
                 {...register("email")}
@@ -88,25 +95,27 @@ export function SignUpForm({
               <Input
                 id="password"
                 type="password"
-                label="Password"
+                label={dictionary.Common.password}
                 error={errors.password?.message}
                 {...register("password")}
               />
               <Input
                 id="repeat-password"
                 type="password"
-                label="Confirm Password"
+                label={dictionary.Common.confirmPassword}
                 error={errors.repeatPassword?.message}
                 {...register("repeatPassword")}
               />
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "Creating an account..." : "Sign up"}
+                {isLoading
+                  ? dictionary.Auth.signup.submitting
+                  : dictionary.Auth.signup.submit}
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-              Already have an account?{" "}
+              {dictionary.Auth.signup.hasAccount}{" "}
               <Link href="/login" className="underline underline-offset-4">
-                Login
+                {dictionary.Auth.signup.loginLink}
               </Link>
             </div>
           </form>

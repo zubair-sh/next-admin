@@ -1,5 +1,7 @@
 "use client";
 
+import { useDictionary } from "@/hooks/use-dictionary";
+
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,6 +35,7 @@ export function LoginForm({
 }: React.ComponentPropsWithoutRef<"div">) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const dictionary = useDictionary();
 
   const {
     register,
@@ -64,10 +67,10 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>
-            Enter your email below to login to your account
-          </CardDescription>
+          <CardTitle className="text-2xl">
+            {dictionary.Auth.login.title}
+          </CardTitle>
+          <CardDescription>{dictionary.Auth.login.description}</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -75,15 +78,15 @@ export function LoginForm({
               <Input
                 id="email"
                 type="email"
-                label="Email"
-                placeholder="m@example.com"
+                label={dictionary.Common.email}
+                placeholder={dictionary.Auth.login.emailPlaceholder}
                 error={errors.email?.message}
                 {...register("email")}
               />
               <Input
                 id="password"
                 type="password"
-                label="Password"
+                label={dictionary.Common.password}
                 error={errors.password?.message}
                 {...register("password")}
               />
@@ -91,17 +94,19 @@ export function LoginForm({
                 href="/forgot-password"
                 className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
               >
-                Forgot your password?
+                {dictionary.Auth.login.forgotPassword}
               </Link>
 
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "Logging in..." : "Login"}
+                {isLoading
+                  ? dictionary.Auth.login.submitting
+                  : dictionary.Auth.login.submit}
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-              Don&apos;t have an account?{" "}
+              {dictionary.Auth.login.noAccount}{" "}
               <Link href="/sign-up" className="underline underline-offset-4">
-                Sign up
+                {dictionary.Auth.login.signupLink}
               </Link>
             </div>
           </form>

@@ -26,17 +26,17 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
 
   const navItems = [
     {
-      title: dictionary.dashboard.overview,
+      title: dictionary.Dashboard.overview,
       href: "/dashboard",
       icon: LayoutDashboard,
     },
     {
-      title: dictionary.dashboard.team,
+      title: dictionary.Dashboard.team,
       href: "/dashboard/team",
       icon: Users,
     },
     {
-      title: dictionary.dashboard.settings,
+      title: dictionary.Dashboard.settings,
       href: "/dashboard/settings",
       icon: Settings,
     },
@@ -52,7 +52,7 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
       <div className="flex h-16 items-center justify-between px-4 border-b">
         {!isCollapsed && (
           <div className="flex items-center gap-2 font-semibold">
-            <span>{dictionary.dashboard.title}</span>
+            <span>{dictionary.Dashboard.title}</span>
           </div>
         )}
         <Button
