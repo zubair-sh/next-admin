@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
-import { ThemeProvider } from "next-themes";
 import "./globals.css";
-import { Toaster } from "@/components/ui/sonner";
-import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import { Providers } from "@/lib/providers";
 
@@ -39,19 +36,7 @@ export default async function RootLayout({
         className={`${geistSans.className} antialiased`}
         suppressHydrationWarning
       >
-        <Providers>
-          <NextIntlClientProvider messages={messages}>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              {children}
-              <Toaster />
-            </ThemeProvider>
-          </NextIntlClientProvider>
-        </Providers>
+        <Providers messages={messages}>{children}</Providers>
       </body>
     </html>
   );
