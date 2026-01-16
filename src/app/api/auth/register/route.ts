@@ -1,6 +1,8 @@
 import { ROUTES } from "@/lib/constants";
+import prisma from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
 import { type NextRequest, NextResponse } from "next/server";
+import { Role } from "@prisma/client";
 
 export async function POST(req: NextRequest) {
   try {
@@ -29,10 +31,21 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: error.message }, { status: 400 });
     }
 
-    return NextResponse.json(
-      { user: data.user, session: data.session },
-      { status: 200 }
-    );
+    const dbUser = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (!dbUser) {
+      await prisma.user.create({
+        data: {
+          id: data?.user?.id,
+          email: data?.user?.email,
+          role: Role.STUDENT,
+        },
+      });
+    }
+
+    return NextResponse.json({ user: dbUser }, { status: 200 });
   } catch (error) {
     console.log(error);
     return NextResponse.json(

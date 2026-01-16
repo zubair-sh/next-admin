@@ -1,9 +1,9 @@
 import { RootState } from "@/store";
-import { User } from "@/types";
+import { IUser } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface AuthState {
-  user: User | null;
+  user: IUser | null;
   accessToken: string | null;
   isAuthenticated: boolean;
 }
@@ -20,7 +20,7 @@ const authSlice = createSlice({
   reducers: {
     loginUser: (
       state,
-      action: PayloadAction<{ user: User; accessToken?: string }>
+      action: PayloadAction<{ user: IUser; accessToken?: string }>
     ) => {
       const { user, accessToken } = action.payload;
       state.user = user;
@@ -32,7 +32,7 @@ const authSlice = createSlice({
       state.accessToken = null;
       state.isAuthenticated = false;
     },
-    updateUser: (state, action: PayloadAction<User>) => {
+    updateUser: (state, action: PayloadAction<IUser>) => {
       state.user = action.payload;
     },
   },

@@ -1,3 +1,4 @@
+import prisma from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -14,7 +15,7 @@ export async function POST(req: NextRequest) {
     }
 
     const supabase = await createClient();
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -23,7 +24,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: error.message }, { status: 401 });
     }
 
-    return NextResponse.json({ user: data.user }, { status: 200 });
+    const dbUser = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (!dbUser) {
+      return NextResponse.json({ message: "User not found" }, { status: 401 });
+    }
+
+    return NextResponse.json({ user: dbUser }, { status: 200 });
   } catch (error) {
     console.log(error);
     return NextResponse.json(

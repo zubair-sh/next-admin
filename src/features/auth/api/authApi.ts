@@ -1,10 +1,10 @@
 import { API_ENDPOINTS } from "@/lib/constants";
 import { api } from "@/services/api";
-import { User } from "@/types";
+import { IUser } from "@/types";
 
 export interface AuthResponse {
   accessToken?: string;
-  user: User;
+  user: IUser;
 }
 
 export interface LoginRequest {
@@ -61,11 +61,11 @@ export const authApi = api.injectEndpoints({
         method: "POST",
       }),
     }),
-    getCurrentUser: builder.query<User, void>({
+    getCurrentUser: builder.query<IUser, void>({
       query: () => API_ENDPOINTS.ME,
       providesTags: ["User"],
     }),
-    updateProfile: builder.mutation<User, UpdateProfileRequest>({
+    updateProfile: builder.mutation<IUser, UpdateProfileRequest>({
       query: (data) => {
         const formData = new FormData();
         if (data.email) formData.append("email", data.email);
@@ -81,7 +81,7 @@ export const authApi = api.injectEndpoints({
       },
       invalidatesTags: ["User"],
     }),
-    updatePassword: builder.mutation<User, UpdatePasswordRequest>({
+    updatePassword: builder.mutation<IUser, UpdatePasswordRequest>({
       query: (data) => ({
         url: API_ENDPOINTS.UPDATE_PASSWORD,
         method: "POST",

@@ -1,20 +1,15 @@
-export type User = {
-  id: string;
-  email?: string;
-  role?: string;
-  created_at: string;
-  updated_at?: string;
-  full_name?: string;
-  avatar_url?: string;
-};
+// Import the Prisma models
+import type { User as PrismaUser, Role as PrismaRole } from "@prisma/client";
+
+export type IUser = PrismaUser;
+export type IUserRole = PrismaRole;
 
 export type AuthResponse = {
-  user: User | null;
+  user: IUser | null;
   error: Error | null;
 };
 
 export interface ApiResponse<T> {
-  success: boolean;
   message: string;
   data: T;
   errors: string[] | null;
