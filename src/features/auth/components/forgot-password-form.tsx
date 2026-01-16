@@ -3,15 +3,15 @@
 import { useDictionary } from "@/hooks/use-dictionary";
 
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import {
+  Button,
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+  Input,
+} from "@/components/ui";
 import Link from "next/link";
 import { useState } from "react";
 import { forgotPassword } from "@/features/auth/actions";
@@ -20,6 +20,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 import { emailSchema } from "../schemas";
+import { ROUTES } from "@/lib/constants";
 
 const schema = z.object({
   email: emailSchema,
@@ -107,7 +108,10 @@ export function ForgotPasswordForm({
               </div>
               <div className="mt-4 text-center text-sm">
                 {dictionary.Auth.forgotPassword.hasAccount}{" "}
-                <Link href="/login" className="underline underline-offset-4">
+                <Link
+                  href={ROUTES.LOGIN}
+                  className="underline underline-offset-4"
+                >
                   {dictionary.Auth.forgotPassword.backToLogin}
                 </Link>
               </div>

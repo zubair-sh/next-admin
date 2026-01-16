@@ -3,15 +3,15 @@
 import { useDictionary } from "@/hooks/use-dictionary";
 
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import {
+  Button,
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+  Input,
+} from "@/components/ui";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -92,7 +92,7 @@ export function LoginForm({
                 {...register("password")}
               />
               <Link
-                href="/forgot-password"
+                href={ROUTES.FORGOT_PASSWORD}
                 className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
               >
                 {dictionary.Auth.login.forgotPassword}
@@ -106,7 +106,10 @@ export function LoginForm({
             </div>
             <div className="mt-4 text-center text-sm">
               {dictionary.Auth.login.noAccount}{" "}
-              <Link href="/sign-up" className="underline underline-offset-4">
+              <Link
+                href={ROUTES.SIGN_UP}
+                className="underline underline-offset-4"
+              >
                 {dictionary.Auth.login.signupLink}
               </Link>
             </div>

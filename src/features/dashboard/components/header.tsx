@@ -1,8 +1,7 @@
 "use client";
 
-import { ThemeSwitcher } from "@/components/shared/theme-switcher";
+import { LanguageSwitcher, ThemeSwitcher } from "@/components/shared";
 import { UserMenu } from "./user-menu";
-import { LanguageSwitcher } from "./language-switcher";
 
 export function Header() {
   return (

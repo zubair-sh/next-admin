@@ -15,6 +15,7 @@ import { useUser } from "@/features/auth/hooks/use-user";
 import { signOut } from "@/features/auth/actions";
 import { User, LogOut, Settings } from "lucide-react";
 import Link from "next/link";
+import { ROUTES } from "@/lib/constants";
 // import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 // Simple Avatar Component since we don't have one yet in ui folder
@@ -51,13 +52,13 @@ export function UserMenu() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href="/dashboard/profile">
+            <Link href={ROUTES.PROFILE}>
               <User className="mr-2 h-4 w-4" />
               <span>{dictionary.Header.profile}</span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href="/dashboard/settings">
+            <Link href={ROUTES.SETTINGS}>
               <Settings className="mr-2 h-4 w-4" />
               <span>{dictionary.Dashboard.settings}</span>
             </Link>

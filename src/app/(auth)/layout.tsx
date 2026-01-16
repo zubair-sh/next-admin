@@ -1,5 +1,4 @@
-import { LanguageSwitcher } from "@/features/dashboard/components/language-switcher";
-import { ThemeSwitcher } from "@/components/shared/theme-switcher";
+import { LanguageSwitcher, ThemeSwitcher } from "@/components/shared";
 
 export default function AuthLayout({
   children,

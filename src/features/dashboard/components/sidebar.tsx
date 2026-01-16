@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 import {
   LayoutDashboard,
   Settings,
@@ -12,6 +12,7 @@ import {
   Users,
 } from "lucide-react";
 import { useDictionary } from "@/hooks/use-dictionary";
+import { ROUTES } from "@/lib/constants";
 
 const iconClasses = "h-5 w-5";
 
@@ -27,17 +28,17 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
   const navItems = [
     {
       title: dictionary.Dashboard.overview,
-      href: "/dashboard",
+      href: ROUTES.DASHBOARD,
       icon: LayoutDashboard,
     },
     {
-      title: dictionary.Dashboard.team,
-      href: "/dashboard/team",
+      title: dictionary.Dashboard.users,
+      href: ROUTES.USERS,
       icon: Users,
     },
     {
       title: dictionary.Dashboard.settings,
-      href: "/dashboard/settings",
+      href: ROUTES.SETTINGS,
       icon: Settings,
     },
   ];

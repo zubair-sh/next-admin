@@ -7,7 +7,12 @@ export const ROUTES = {
   SIGN_UP_SUCCESS: "/sign-up-success",
   FORGOT_PASSWORD: "/forgot-password",
   UPDATE_PASSWORD: "/update-password",
+
   DASHBOARD: "/dashboard",
+  USERS: "/users",
+  SETTINGS: "/settings",
+  PROFILE: "/profile",
+
   CALLBACK: "/callback",
 } as const;
 

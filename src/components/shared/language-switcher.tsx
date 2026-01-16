@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Globe } from "lucide-react";
-import { setLocale } from "../actions";
+import { setLocale } from "@/i18n/actions";
 import { useRouter } from "next/navigation";
 
 export function LanguageSwitcher() {
