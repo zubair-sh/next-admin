@@ -4,6 +4,7 @@ import { StoreProvider } from "./StoreProvider";
 import { ThemeProvider } from "next-themes";
 import { NextIntlClientProvider, AbstractIntlMessages } from "next-intl";
 import { Toaster } from "@/components/ui/sonner";
+import { AuthInitializer } from "@/components/auth/auth-initializer";
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -22,6 +23,7 @@ export function Providers({ children, messages, locale }: ProvidersProps) {
           disableTransitionOnChange
         >
           {children}
+          <AuthInitializer />
           <Toaster />
         </ThemeProvider>
       </NextIntlClientProvider>

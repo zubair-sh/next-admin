@@ -56,8 +56,7 @@ export function useAuth() {
         router.refresh(); // Refresh to update server components/middleware state
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
-        const errorMessage =
-          error?.data?.message || "Invalid email or password";
+        const errorMessage = error?.data?.message || error.message || "";
         toast.error(errorMessage);
         throw error;
       } finally {
@@ -77,8 +76,7 @@ export function useAuth() {
         router.refresh(); // Refresh to update server components/middleware state
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
-        const errorMessage =
-          error?.data?.message || "Invalid email or password";
+        const errorMessage = error?.data?.message || error.message || "";
         toast.error(errorMessage);
         throw error;
       } finally {
@@ -94,7 +92,7 @@ export function useAuth() {
       await forgotPasswordAction(data);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      const errorMessage = error?.data?.message || "";
+      const errorMessage = error?.data?.message || error.message || "";
       toast.error(errorMessage);
       throw error;
     } finally {
@@ -106,11 +104,14 @@ export function useAuth() {
     async (data: { password: string }) => {
       try {
         setIsLoading(true);
+
         await updatePasswordAction(data);
+
         router.push(ROUTES.DASHBOARD);
+
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
-        const errorMessage = error?.data?.message || "";
+        const errorMessage = error?.data?.message || error.message || "";
         toast.error(errorMessage);
         throw error;
       } finally {

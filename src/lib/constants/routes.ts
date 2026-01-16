@@ -25,5 +25,4 @@ export const AUTH_ROUTES = [
   "/sign-up",
   "/sign-up-success",
   "/forgot-password",
-  "/update-password",
 ];
