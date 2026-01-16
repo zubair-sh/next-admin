@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { useDictionary } from "@/hooks/use-dictionary";
+import { useDictionary } from "@/hooks";
 import {
+  Avatar,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
@@ -10,18 +10,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui";
 import { useUser } from "@/features/auth/hooks/use-user";
 import { signOut } from "@/features/auth/actions";
 import { User, LogOut, Settings } from "lucide-react";
 import Link from "next/link";
 import { ROUTES } from "@/lib/constants";
-// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
-// Simple Avatar Component since we don't have one yet in ui folder
-// Or we can just use a User icon for now if Avatar is not available.
-// Checking ui folder previously, we didn't see avatar.tsx.
-// Let's use a simple button with icon for now or just the text.
 
 export function UserMenu() {
   const { user } = useUser();
@@ -32,11 +26,7 @@ export function UserMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted">
-            <User className="h-5 w-5" />
-          </div>
-        </Button>
+        <Avatar className="h-8 w-8" src="" alt={user.email || ""} />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
