@@ -13,9 +13,9 @@ export const errorMiddleware: Middleware = () => (next) => (action) => {
     const error = action.payload as ApiError;
 
     // Don't show notification for 401 (handled by auth)
-    if (error.status === 401) {
-      return next(action);
-    }
+    // if (error.status === 401) {
+    //   return next(action);
+    // }
 
     let message = "An unexpected error occurred";
 
