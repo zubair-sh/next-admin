@@ -7,23 +7,6 @@ export const APP_CONFIG = {
   defaultLocale: process.env.NEXT_PUBLIC_DEFAULT_LOCALE || "en",
 } as const;
 
-export const API_ENDPOINTS = {
-  // Auth
-  LOGIN: "/auth/login",
-  REGISTER: "/auth/register",
-  FORGOT_PASSWORD: "/auth/forgot-password",
-  UPDATE_PASSWORD: "/auth/update-password",
-  LOGOUT: "/auth/logout",
-  DELETE_ACCOUNT: "/auth/delete-account",
-  REFRESH: "/auth/refresh-token",
-  ME: "/auth/me",
-
-  // Users
-  USERS: "/users",
-  USER_BY_ID: (id: string) => `/users/${id}`,
-  USERS_EXPORT: "/users/export",
-} as const;
-
 export const STORAGE_KEYS = {
   ACCESS_TOKEN: "access_token",
   REFRESH_TOKEN: "refresh_token",

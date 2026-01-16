@@ -1,4 +1,9 @@
-import { PUBLIC_ROUTES, AUTH_ROUTES, ROUTES } from "@/lib/constants";
+import {
+  PUBLIC_ROUTES,
+  AUTH_ROUTES,
+  ROUTES,
+  PUBLIC_API_ROUTES,
+} from "@/lib/constants";
 import { updateSession } from "@/lib/supabase/proxy";
 import { NextResponse, type NextRequest } from "next/server";
 
@@ -14,6 +19,18 @@ export async function middleware(request: NextRequest) {
       ? request.nextUrl.pathname === "/"
       : request.nextUrl.pathname.startsWith(route)
   );
+
+  const isApiRoute = request.nextUrl.pathname.startsWith("/api");
+  const isPublicApiRoute = PUBLIC_API_ROUTES.some((route) =>
+    request.nextUrl.pathname.startsWith(route)
+  );
+
+  if (isApiRoute) {
+    if (!isPublicApiRoute && !isAuthenticated) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+    return NextResponse.next();
+  }
 
   const isAuthRoute = AUTH_ROUTES.some((route) =>
     request.nextUrl.pathname.startsWith(route)

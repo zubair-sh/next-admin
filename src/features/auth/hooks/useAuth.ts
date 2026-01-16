@@ -129,14 +129,14 @@ export function useAuth() {
   const logout = useCallback(async () => {
     try {
       setIsLoading(true);
-      dispatch(logoutUser());
-      deleteCookie("accessToken");
-      router.push(ROUTES.LOGIN);
-      router.refresh();
       await logoutMutation().unwrap();
     } catch {
       // Ignore errors during logout
     } finally {
+      dispatch(logoutUser());
+      deleteCookie("accessToken");
+      router.push(ROUTES.LOGIN);
+      router.refresh();
       setIsLoading(false);
     }
   }, [dispatch, router, logoutMutation]);
@@ -145,13 +145,13 @@ export function useAuth() {
     try {
       setIsLoading(true);
       await deleteAccountMutation().unwrap();
+    } catch {
+      // Ignore errors during logout
+    } finally {
       dispatch(logoutUser());
       deleteCookie("accessToken");
       router.push(ROUTES.LOGIN);
       router.refresh();
-    } catch {
-      // Ignore errors during logout
-    } finally {
       setIsLoading(false);
     }
   }, [dispatch, router, deleteAccountMutation]);
