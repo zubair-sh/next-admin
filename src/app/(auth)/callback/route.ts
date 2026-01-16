@@ -1,4 +1,4 @@
-import { loginWithCodeAction } from "@/features/auth/actions";
+import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -9,7 +9,12 @@ export async function GET(request: Request) {
 
   if (code) {
     try {
-      await loginWithCodeAction(code);
+      const supabase = await createClient();
+      const { error } = await supabase.auth.exchangeCodeForSession(code);
+
+      if (error) {
+        return NextResponse.json({ error: error.message }, { status: 400 });
+      }
       const forwardedHost = request.headers.get("x-forwarded-host"); // original origin before load balancer
       const isLocalEnv = process.env.NODE_ENV === "development";
       if (isLocalEnv) {

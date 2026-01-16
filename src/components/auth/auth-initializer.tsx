@@ -2,8 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import { useAppDispatch } from "@/store/hooks";
-import { getCurrentUserAction } from "@/features/auth/actions";
 import { loginUser } from "@/features/auth/slices/authSlice";
+import { authApi } from "@/features/auth/api/authApi";
 
 export function AuthInitializer() {
   const dispatch = useAppDispatch();
@@ -15,7 +15,9 @@ export function AuthInitializer() {
 
     const initAuth = async () => {
       try {
-        const user = await getCurrentUserAction();
+        const user = await dispatch(
+          authApi.endpoints.getCurrentUser.initiate()
+        ).unwrap();
         if (user) {
           dispatch(loginUser({ user }));
         }

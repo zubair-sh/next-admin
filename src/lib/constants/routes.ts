@@ -45,4 +45,6 @@ export const PUBLIC_API_ROUTES = [
   "/api/auth/register",
   "/api/auth/forgot-password",
   "/api/auth/refresh-token",
+  "/api/auth/verify-otp",
+  "/api/auth/exchange-code",
 ];

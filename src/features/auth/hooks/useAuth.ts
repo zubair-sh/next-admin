@@ -42,25 +42,15 @@ export function useAuth() {
       try {
         setIsLoading(true);
         const res = await loginMutation(data).unwrap();
-
-        // Dispatch credentials to Redux store
         dispatch(loginUser(res));
-
-        // Set cookie for middleware access
         setCookie("accessToken", res.accessToken || "", {
           maxAge: 60 * 60 * 24 * 30,
           path: "/",
         });
-
         toast.success("Login successful");
-
         router.push(ROUTES.DASHBOARD);
-        router.refresh(); // Refresh to update server components/middleware state
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
-        const errorMessage = error?.data?.message || error.message || "";
-        toast.error(errorMessage);
-        throw error;
+        router.refresh();
+      } catch {
       } finally {
         setIsLoading(false);
       }
@@ -73,14 +63,9 @@ export function useAuth() {
       try {
         setIsLoading(true);
         await registerMutation(data).unwrap();
-
         router.push(ROUTES.SIGN_UP_SUCCESS);
-        router.refresh(); // Refresh to update server components/middleware state
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
-        const errorMessage = error?.data?.message || error.message || "";
-        toast.error(errorMessage);
-        throw error;
+        router.refresh();
+      } catch {
       } finally {
         setIsLoading(false);
       }
@@ -93,11 +78,7 @@ export function useAuth() {
       try {
         setIsLoading(true);
         await forgotPasswordMutation(data).unwrap();
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
-        const errorMessage = error?.data?.message || error.message || "";
-        toast.error(errorMessage);
-        throw error;
+      } catch {
       } finally {
         setIsLoading(false);
       }
@@ -109,21 +90,15 @@ export function useAuth() {
     async (data: { password: string }) => {
       try {
         setIsLoading(true);
-
-        await updatePasswordMutation(data).unwrap();
-
+        const user = await updatePasswordMutation(data).unwrap();
+        dispatch(loginUser({ user }));
         router.push(ROUTES.DASHBOARD);
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
-        const errorMessage = error?.data?.message || error.message || "";
-        toast.error(errorMessage);
-        throw error;
+      } catch {
       } finally {
         setIsLoading(false);
       }
     },
-    [router, updatePasswordMutation]
+    [router, updatePasswordMutation, dispatch]
   );
 
   const logout = useCallback(async () => {
@@ -131,7 +106,6 @@ export function useAuth() {
       setIsLoading(true);
       await logoutMutation().unwrap();
     } catch {
-      // Ignore errors during logout
     } finally {
       dispatch(logoutUser());
       deleteCookie("accessToken");
@@ -146,7 +120,6 @@ export function useAuth() {
       setIsLoading(true);
       await deleteAccountMutation().unwrap();
     } catch {
-      // Ignore errors during logout
     } finally {
       dispatch(logoutUser());
       deleteCookie("accessToken");

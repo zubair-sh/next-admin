@@ -81,7 +81,7 @@ export const authApi = api.injectEndpoints({
       },
       invalidatesTags: ["User"],
     }),
-    updatePassword: builder.mutation<string, UpdatePasswordRequest>({
+    updatePassword: builder.mutation<User, UpdatePasswordRequest>({
       query: (data) => ({
         url: API_ENDPOINTS.UPDATE_PASSWORD,
         method: "POST",
