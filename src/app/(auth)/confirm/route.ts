@@ -1,4 +1,5 @@
-import { verifyOtpAction } from "@/features/auth/actions";
+import { createClient } from "@/lib/supabase/server";
+import { EmailOtpType } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
 import { type NextRequest } from "next/server";
 
@@ -10,7 +11,16 @@ export async function GET(request: NextRequest) {
 
   if (tokenHash && type) {
     try {
-      await verifyOtpAction(type, tokenHash);
+      const supabase = await createClient();
+
+      const { error } = await supabase.auth.verifyOtp({
+        type: type as EmailOtpType,
+        token_hash: tokenHash,
+      });
+
+      if (error) {
+        throw error;
+      }
       redirect(next);
     } catch (error) {
       redirect(`/error?error=${error instanceof Error ? error.message : ""}`);
