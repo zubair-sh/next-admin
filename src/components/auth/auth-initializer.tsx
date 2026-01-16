@@ -17,7 +17,7 @@ export function AuthInitializer() {
       try {
         const user = await getCurrentUserAction();
         if (user) {
-          dispatch(loginUser({ user, token: "" }));
+          dispatch(loginUser({ user }));
         }
       } catch {
         // User not authenticated, do nothing

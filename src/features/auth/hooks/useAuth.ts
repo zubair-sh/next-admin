@@ -14,13 +14,13 @@ import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { toast } from "sonner";
 import {
-  DeleteAccountAction,
-  forgotPasswordAction,
-  loginAction,
-  logoutAction,
-  registerAction,
-  updatePasswordAction,
-} from "../actions";
+  useDeleteAccountMutation,
+  useForgotPasswordMutation,
+  useLoginMutation,
+  useLogoutMutation,
+  useRegisterMutation,
+  useUpdatePasswordMutation,
+} from "../api/authApi";
 
 export function useAuth() {
   const dispatch = useAppDispatch();
@@ -30,22 +30,24 @@ export function useAuth() {
   const user = useAppSelector(selectCurrentUser);
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
+  const [loginMutation] = useLoginMutation();
+  const [registerMutation] = useRegisterMutation();
+  const [forgotPasswordMutation] = useForgotPasswordMutation();
+  const [logoutMutation] = useLogoutMutation();
+  const [updatePasswordMutation] = useUpdatePasswordMutation();
+  const [deleteAccountMutation] = useDeleteAccountMutation();
+
   const login = useCallback(
     async (data: { email: string; password: string }) => {
       try {
         setIsLoading(true);
-        const user = await loginAction(data);
+        const res = await loginMutation(data).unwrap();
 
         // Dispatch credentials to Redux store
-        dispatch(
-          loginUser({
-            user,
-            token: "",
-          })
-        );
+        dispatch(loginUser(res));
 
         // Set cookie for middleware access
-        setCookie("accessToken", "", {
+        setCookie("accessToken", res.accessToken || "", {
           maxAge: 60 * 60 * 24 * 30,
           path: "/",
         });
@@ -63,14 +65,14 @@ export function useAuth() {
         setIsLoading(false);
       }
     },
-    [dispatch, router]
+    [dispatch, router, loginMutation]
   );
 
   const signup = useCallback(
     async (data: { email: string; password: string }) => {
       try {
         setIsLoading(true);
-        await registerAction(data);
+        await registerMutation(data).unwrap();
 
         router.push(ROUTES.SIGN_UP_SUCCESS);
         router.refresh(); // Refresh to update server components/middleware state
@@ -83,29 +85,32 @@ export function useAuth() {
         setIsLoading(false);
       }
     },
-    [router]
+    [router, registerMutation]
   );
 
-  const forgotPassword = useCallback(async (data: { email: string }) => {
-    try {
-      setIsLoading(true);
-      await forgotPasswordAction(data);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      const errorMessage = error?.data?.message || error.message || "";
-      toast.error(errorMessage);
-      throw error;
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+  const forgotPassword = useCallback(
+    async (data: { email: string }) => {
+      try {
+        setIsLoading(true);
+        await forgotPasswordMutation(data).unwrap();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        const errorMessage = error?.data?.message || error.message || "";
+        toast.error(errorMessage);
+        throw error;
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [forgotPasswordMutation]
+  );
 
   const updatePassword = useCallback(
     async (data: { password: string }) => {
       try {
         setIsLoading(true);
 
-        await updatePasswordAction(data);
+        await updatePasswordMutation(data).unwrap();
 
         router.push(ROUTES.DASHBOARD);
 
@@ -118,7 +123,7 @@ export function useAuth() {
         setIsLoading(false);
       }
     },
-    [router]
+    [router, updatePasswordMutation]
   );
 
   const logout = useCallback(async () => {
@@ -128,19 +133,19 @@ export function useAuth() {
       deleteCookie("accessToken");
       router.push(ROUTES.LOGIN);
       router.refresh();
-      await logoutAction();
+      await logoutMutation().unwrap();
     } catch {
       // Ignore errors during logout
     } finally {
       setIsLoading(false);
     }
-  }, [dispatch, router]);
+  }, [dispatch, router, logoutMutation]);
 
   const deleteAccount = useCallback(async () => {
     try {
       setIsLoading(true);
-      await DeleteAccountAction();
-      dispatch(logoutAction());
+      await deleteAccountMutation().unwrap();
+      dispatch(logoutUser());
       deleteCookie("accessToken");
       router.push(ROUTES.LOGIN);
       router.refresh();
@@ -149,7 +154,7 @@ export function useAuth() {
     } finally {
       setIsLoading(false);
     }
-  }, [dispatch, router]);
+  }, [dispatch, router, deleteAccountMutation]);
 
   const checkPermission = useCallback(
     (permission: Permission): boolean => {

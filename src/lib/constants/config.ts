@@ -1,7 +1,7 @@
 export const APP_CONFIG = {
   name: process.env.NEXT_PUBLIC_APP_NAME || "Next Admin",
   version: process.env.NEXT_PUBLIC_APP_VERSION || "1.0.0",
-  apiUrl: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000",
+  apiUrl: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api",
   appUrl: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
   enableDarkMode: process.env.NEXT_PUBLIC_ENABLE_DARK_MODE === "true",
   defaultLocale: process.env.NEXT_PUBLIC_DEFAULT_LOCALE || "en",
@@ -12,8 +12,9 @@ export const API_ENDPOINTS = {
   LOGIN: "/auth/login",
   REGISTER: "/auth/register",
   FORGOT_PASSWORD: "/auth/forgot-password",
-  RESET_PASSWORD: "/auth/reset-password",
+  UPDATE_PASSWORD: "/auth/update-password",
   LOGOUT: "/auth/logout",
+  DELETE_ACCOUNT: "/auth/delete-account",
   REFRESH: "/auth/refresh-token",
   ME: "/auth/me",
 

@@ -19,10 +19,10 @@ const rawBaseQuery = fetchBaseQuery({
   prepareHeaders: (headers, { getState }) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const state = getState() as any; // Cast to avoid circular dependency import with RootState
-    const token = state.auth.token;
+    const accessToken = state.auth.accessToken;
 
-    if (token) {
-      headers.set("Authorization", `Bearer ${token}`);
+    if (accessToken) {
+      headers.set("Authorization", `Bearer ${accessToken}`);
     }
 
     return headers;
@@ -105,7 +105,7 @@ export const baseQueryWithReauth: BaseQueryFn<
             api.dispatch(
               loginUser({
                 user: authResponse.user,
-                token: authResponse.accessToken,
+                accessToken: authResponse.accessToken,
               })
             );
             // Retry the initial query
