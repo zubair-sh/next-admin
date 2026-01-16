@@ -9,6 +9,7 @@ const appReducer = combineReducers({
   ui: uiReducer,
 });
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const rootReducer = (state: any, action: any) => {
   if (action.type === "auth/logout") {
     state = undefined;

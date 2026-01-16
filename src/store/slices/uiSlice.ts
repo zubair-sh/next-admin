@@ -1,23 +1,19 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export type ThemeMode = 'light' | 'dark' | 'system';
+export type ThemeMode = "light" | "dark" | "system";
 
 interface UIState {
   sidebarOpen: boolean;
   sidebarCollapsed: boolean;
-  themeMode: ThemeMode;
-  locale: string;
 }
 
 const initialState: UIState = {
   sidebarOpen: false,
   sidebarCollapsed: false,
-  themeMode: 'system',
-  locale: 'en',
 };
 
 const uiSlice = createSlice({
-  name: 'ui',
+  name: "ui",
   initialState,
   reducers: {
     toggleSidebar: (state) => {
@@ -32,12 +28,6 @@ const uiSlice = createSlice({
     setSidebarCollapsed: (state, action: PayloadAction<boolean>) => {
       state.sidebarCollapsed = action.payload;
     },
-    setThemeMode: (state, action: PayloadAction<ThemeMode>) => {
-      state.themeMode = action.payload;
-    },
-    setLocale: (state, action: PayloadAction<string>) => {
-      state.locale = action.payload;
-    },
   },
 });
 
@@ -46,15 +36,12 @@ export const {
   setSidebarOpen,
   toggleSidebarCollapse,
   setSidebarCollapsed,
-  setThemeMode,
-  setLocale,
 } = uiSlice.actions;
 
 // Selectors
-export const selectSidebarOpen = (state: { ui: UIState }) => state.ui.sidebarOpen;
+export const selectSidebarOpen = (state: { ui: UIState }) =>
+  state.ui.sidebarOpen;
 export const selectSidebarCollapsed = (state: { ui: UIState }) =>
   state.ui.sidebarCollapsed;
-export const selectThemeMode = (state: { ui: UIState }) => state.ui.themeMode;
-export const selectLocale = (state: { ui: UIState }) => state.ui.locale;
 
 export default uiSlice.reducer;

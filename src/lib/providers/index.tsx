@@ -8,12 +8,13 @@ import { Toaster } from "@/components/ui/sonner";
 interface ProvidersProps {
   children: React.ReactNode;
   messages: AbstractIntlMessages;
+  locale: string;
 }
 
-export function Providers({ children, messages }: ProvidersProps) {
+export function Providers({ children, messages, locale }: ProvidersProps) {
   return (
     <StoreProvider>
-      <NextIntlClientProvider messages={messages}>
+      <NextIntlClientProvider messages={messages} locale={locale}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

@@ -36,7 +36,9 @@ export default async function RootLayout({
         className={`${geistSans.className} antialiased`}
         suppressHydrationWarning
       >
-        <Providers messages={messages}>{children}</Providers>
+        <Providers messages={messages} locale={locale}>
+          {children}
+        </Providers>
       </body>
     </html>
   );

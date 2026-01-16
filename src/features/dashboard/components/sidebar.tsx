@@ -16,12 +16,17 @@ import { ROUTES } from "@/lib/constants";
 
 const iconClasses = "h-5 w-5";
 
-interface SidebarProps {
-  isCollapsed: boolean;
-  setIsCollapsed: (collapsed: boolean) => void;
-}
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import {
+  selectSidebarCollapsed,
+  setSidebarCollapsed,
+} from "@/store/slices/uiSlice";
 
-export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
+export function Sidebar() {
+  const dispatch = useAppDispatch();
+  const isCollapsed = useAppSelector(selectSidebarCollapsed);
+  const setIsCollapsed = (collapsed: boolean) =>
+    dispatch(setSidebarCollapsed(collapsed));
   const pathname = usePathname();
   const dictionary = useDictionary();
 
