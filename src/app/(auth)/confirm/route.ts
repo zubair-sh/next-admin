@@ -1,4 +1,4 @@
-import { verifyOtp } from "@/features/auth/actions";
+import { verifyOtpAction } from "@/features/auth/actions";
 import { redirect } from "next/navigation";
 import { type NextRequest } from "next/server";
 
@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
 
   if (tokenHash && type) {
     try {
-      await verifyOtp(type, tokenHash);
+      await verifyOtpAction(type, tokenHash);
       redirect(next);
     } catch (error) {
       redirect(`/error?error=${error instanceof Error ? error.message : ""}`);

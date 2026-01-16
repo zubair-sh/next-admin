@@ -12,15 +12,11 @@ import {
   CardTitle,
   Input,
 } from "@/components/ui";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { z } from "zod";
-import { updatePassword } from "@/features/auth/actions";
-import { ROUTES } from "@/lib/constants";
 import { passwordSchema } from "../schemas";
+import { useAuth } from "../hooks/useAuth";
 
 const schema = z.object({
   password: passwordSchema,
@@ -32,8 +28,7 @@ export function UpdatePasswordForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const { updatePassword, isLoading } = useAuth();
   const dictionary = useDictionary();
 
   const {
@@ -48,17 +43,7 @@ export function UpdatePasswordForm({
   });
 
   const onSubmit = async (data: FormValues) => {
-    setIsLoading(true);
-    try {
-      await updatePassword(data);
-      router.push(ROUTES.DASHBOARD);
-    } catch (error) {
-      toast.error(
-        error instanceof Error ? error.message : "Invalid credentials"
-      );
-    } finally {
-      setIsLoading(false);
-    }
+    await updatePassword(data);
   };
 
   return (
@@ -83,10 +68,8 @@ export function UpdatePasswordForm({
                 error={errors.password?.message}
                 {...register("password")}
               />
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading
-                  ? dictionary.Auth.updatePassword.submitting
-                  : dictionary.Auth.updatePassword.submit}
+              <Button type="submit" className="w-full" isLoading={isLoading}>
+                {dictionary.Auth.updatePassword.submit}
               </Button>
             </div>
           </form>

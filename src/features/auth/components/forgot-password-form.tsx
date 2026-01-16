@@ -14,13 +14,12 @@ import {
 } from "@/components/ui";
 import Link from "next/link";
 import { useState } from "react";
-import { forgotPassword } from "@/features/auth/actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import z from "zod";
 import { emailSchema } from "../schemas";
 import { ROUTES } from "@/lib/constants";
+import { useAuth } from "../hooks/useAuth";
 
 const schema = z.object({
   email: emailSchema,
@@ -33,7 +32,7 @@ export function ForgotPasswordForm({
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
   const [success, setSuccess] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const { forgotPassword, isLoading } = useAuth();
   const dictionary = useDictionary();
 
   const {
@@ -48,17 +47,8 @@ export function ForgotPasswordForm({
   });
 
   const onSubmit = async (data: FormValues) => {
-    setIsLoading(true);
-    try {
-      await forgotPassword(data);
-      setSuccess(true);
-    } catch (error) {
-      toast.error(
-        error instanceof Error ? error.message : "Invalid credentials"
-      );
-    } finally {
-      setIsLoading(false);
-    }
+    await forgotPassword(data);
+    setSuccess(true);
   };
 
   return (
@@ -100,10 +90,8 @@ export function ForgotPasswordForm({
                   error={errors.email?.message}
                   {...register("email")}
                 />
-                <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading
-                    ? dictionary.Auth.forgotPassword.submitting
-                    : dictionary.Auth.forgotPassword.submit}
+                <Button type="submit" className="w-full" isLoading={isLoading}>
+                  {dictionary.Auth.forgotPassword.submit}
                 </Button>
               </div>
               <div className="mt-4 text-center text-sm">

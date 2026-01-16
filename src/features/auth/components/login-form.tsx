@@ -16,12 +16,9 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { login } from "@/features/auth/actions";
-import { toast } from "sonner";
-import { useState } from "react";
 import { ROUTES } from "@/lib/constants";
-import { useRouter } from "next/navigation";
 import { emailSchema, passwordSchema } from "../schemas";
+import { useAuth } from "../hooks/useAuth";
 
 const schema = z.object({
   email: emailSchema,
@@ -34,8 +31,7 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const { login, isLoading } = useAuth();
   const dictionary = useDictionary();
 
   const {
@@ -51,17 +47,7 @@ export function LoginForm({
   });
 
   const onSubmit = async (data: FormValues) => {
-    setIsLoading(true);
-    try {
-      await login(data);
-      router.replace(ROUTES.DASHBOARD);
-    } catch (error) {
-      toast.error(
-        error instanceof Error ? error.message : "Invalid credentials"
-      );
-    } finally {
-      setIsLoading(false);
-    }
+    await login(data);
   };
 
   return (
@@ -98,10 +84,8 @@ export function LoginForm({
                 {dictionary.Auth.login.forgotPassword}
               </Link>
 
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading
-                  ? dictionary.Auth.login.submitting
-                  : dictionary.Auth.login.submit}
+              <Button type="submit" className="w-full" isLoading={isLoading}>
+                {dictionary.Auth.login.submit}
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">

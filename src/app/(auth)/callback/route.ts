@@ -1,4 +1,4 @@
-import { loginWithCode } from "@/features/auth/actions";
+import { loginWithCodeAction } from "@/features/auth/actions";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -9,7 +9,7 @@ export async function GET(request: Request) {
 
   if (code) {
     try {
-      await loginWithCode(code);
+      await loginWithCodeAction(code);
     } catch {
       const forwardedHost = request.headers.get("x-forwarded-host"); // original origin before load balancer
       const isLocalEnv = process.env.NODE_ENV === "development";

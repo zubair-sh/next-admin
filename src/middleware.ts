@@ -5,6 +5,10 @@ import { NextResponse, type NextRequest } from "next/server";
 export async function middleware(request: NextRequest) {
   const user = await updateSession(request);
 
+  const token = request.cookies.get("accessToken")?.value;
+
+  const isAuthenticated = !!token || user;
+
   const isPublicRoute = PUBLIC_ROUTES.some((route) =>
     route === "/"
       ? request.nextUrl.pathname === "/"
@@ -15,13 +19,13 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith(route)
   );
 
-  if (user && isAuthRoute) {
+  if (isAuthenticated && isAuthRoute) {
     const url = request.nextUrl.clone();
     url.pathname = ROUTES.DASHBOARD;
     return NextResponse.redirect(url);
   }
 
-  if (!user && !isPublicRoute && !isAuthRoute) {
+  if (!isAuthenticated && !isPublicRoute && !isAuthRoute) {
     const url = request.nextUrl.clone();
     url.pathname = ROUTES.LOGIN;
     return NextResponse.redirect(url);

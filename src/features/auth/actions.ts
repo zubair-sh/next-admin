@@ -7,7 +7,10 @@ import { EmailOtpType } from "@supabase/supabase-js";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-export const login = async (data: { email: string; password: string }) => {
+export const loginAction = async (data: {
+  email: string;
+  password: string;
+}) => {
   const supabase = await createClient();
 
   const { error } = await supabase.auth.signInWithPassword({
@@ -18,9 +21,19 @@ export const login = async (data: { email: string; password: string }) => {
   if (error) {
     throw error;
   }
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) throw "User not found";
+
+  return user;
 };
 
-export const signup = async (data: { email: string; password: string }) => {
+export const registerAction = async (data: {
+  email: string;
+  password: string;
+}) => {
   const origin = (await headers()).get("origin");
   const supabase = await createClient();
 
@@ -37,7 +50,7 @@ export const signup = async (data: { email: string; password: string }) => {
   }
 };
 
-export const forgotPassword = async (data: { email: string }) => {
+export const forgotPasswordAction = async (data: { email: string }) => {
   const origin = (await headers()).get("origin");
   const supabase = await createClient();
 
@@ -50,7 +63,7 @@ export const forgotPassword = async (data: { email: string }) => {
   }
 };
 
-export const updatePassword = async (data: { password: string }) => {
+export const updatePasswordAction = async (data: { password: string }) => {
   const supabase = await createClient();
 
   const { error } = await supabase.auth.updateUser({ password: data.password });
@@ -60,13 +73,19 @@ export const updatePassword = async (data: { password: string }) => {
   }
 };
 
-export const signOut = async () => {
+export const logoutAction = async () => {
   const supabase = await createClient();
   await supabase.auth.signOut();
   redirect(ROUTES.LOGIN);
 };
 
-export const loginWithCode = async (code: string) => {
+export const DeleteAccountAction = async () => {
+  const supabase = await createClient();
+  await supabase.auth.signOut();
+  redirect(ROUTES.LOGIN);
+};
+
+export const loginWithCodeAction = async (code: string) => {
   const supabase = await createClient();
   const { error } = await supabase.auth.exchangeCodeForSession(code);
   if (error) {
@@ -74,7 +93,7 @@ export const loginWithCode = async (code: string) => {
   }
 };
 
-export const verifyOtp = async (type: string, tokenHash: string) => {
+export const verifyOtpAction = async (type: string, tokenHash: string) => {
   const supabase = await createClient();
 
   const { error } = await supabase.auth.verifyOtp({
@@ -87,7 +106,7 @@ export const verifyOtp = async (type: string, tokenHash: string) => {
   }
 };
 
-export const getSession = async () => {
+export const getSessionAction = async () => {
   const supabase = await createClient();
   const {
     data: { session },
@@ -95,7 +114,7 @@ export const getSession = async () => {
   return session;
 };
 
-export const getCurrentUser = async (): Promise<User | null> => {
+export const getCurrentUserAction = async (): Promise<User | null> => {
   const supabase = await createClient();
   const {
     data: { user },

@@ -1,5 +1,3 @@
-export const APP_NAME = "Next.js Supabase Starter";
-
 export const ROUTES = {
   HOME: "/",
   LOGIN: "/login",

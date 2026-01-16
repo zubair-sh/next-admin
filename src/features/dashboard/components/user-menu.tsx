@@ -11,14 +11,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui";
-import { useUser } from "@/features/auth/hooks/use-user";
-import { signOut } from "@/features/auth/actions";
 import { User, LogOut, Settings } from "lucide-react";
 import Link from "next/link";
 import { ROUTES } from "@/lib/constants";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 export function UserMenu() {
-  const { user } = useUser();
+  const { user, logout } = useAuth();
   const dictionary = useDictionary();
 
   if (!user) return null;
@@ -55,7 +54,7 @@ export function UserMenu() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOut()}>
+        <DropdownMenuItem onClick={logout}>
           <LogOut className="mr-2 h-4 w-4" />
           <span>{dictionary.Header.logout}</span>
         </DropdownMenuItem>

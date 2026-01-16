@@ -13,15 +13,12 @@ import {
   Input,
 } from "@/components/ui";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { ROUTES } from "@/lib/constants";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { toast } from "sonner";
-import { signup } from "@/features/auth/actions";
 import { emailSchema, passwordSchema } from "../schemas";
+import { useAuth } from "../hooks/useAuth";
 
 const schema = z
   .object({
@@ -40,8 +37,7 @@ export function SignUpForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const { signup, isLoading } = useAuth();
   const dictionary = useDictionary();
 
   const {
@@ -58,17 +54,7 @@ export function SignUpForm({
   });
 
   const onSubmit = async (data: FormValues) => {
-    setIsLoading(true);
-    try {
-      await signup({ email: data.email, password: data.password });
-      router.replace(ROUTES.SIGN_UP_SUCCESS);
-    } catch (error) {
-      toast.error(
-        error instanceof Error ? error.message : "Invalid credentials"
-      );
-    } finally {
-      setIsLoading(false);
-    }
+    await signup(data);
   };
 
   return (
@@ -107,10 +93,8 @@ export function SignUpForm({
                 error={errors.repeatPassword?.message}
                 {...register("repeatPassword")}
               />
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading
-                  ? dictionary.Auth.signup.submitting
-                  : dictionary.Auth.signup.submit}
+              <Button type="submit" className="w-full" isLoading={isLoading}>
+                {dictionary.Auth.signup.submit}
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
