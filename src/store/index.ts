@@ -12,6 +12,7 @@ import {
 import storage from "redux-persist/lib/storage";
 import { api } from "./api";
 import authReducer from "@/features/auth/store/auth.slice";
+import { AppConstants } from "@/config/constants";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -22,7 +23,7 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  whitelist: ["auth"],
+  whitelist: ["auth", AppConstants.isDev ? "" : "api"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

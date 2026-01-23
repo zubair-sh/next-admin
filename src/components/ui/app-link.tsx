@@ -16,6 +16,7 @@ export const AppLink = forwardRef<HTMLAnchorElement, LinkProps>(
         href={href}
         component={Link}
         underline="none"
+        prefetch={false}
         {...props}
       >
         {children}
