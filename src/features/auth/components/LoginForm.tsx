@@ -1,0 +1,87 @@
+"use client";
+
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AppButton, AppField, AppLink } from "@/components/ui";
+import { loginSchema, type LoginFormData } from "@/features/auth/schemas";
+import { useAuth } from "@/features/auth/hooks";
+import { Card, CardContent, Container, Stack, Typography } from "@mui/material";
+import { useTranslation } from "@/hooks/use-translation";
+import { AppRoutes } from "@/config/constants";
+
+export function LoginForm() {
+  const { isLoading, login } = useAuth();
+  const { t } = useTranslation();
+
+  const { control, handleSubmit } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const onSubmit = async (data: LoginFormData) => {
+    await login(data);
+  };
+
+  return (
+    <Container maxWidth="xs">
+      <Stack sx={{ minHeight: "100vh" }} justifyContent="center">
+        <Card>
+          <CardContent>
+            <Stack spacing={2}>
+              <Stack alignItems="center">
+                <Typography variant="h4" component="h1">
+                  {t("auth.login_title")}
+                </Typography>
+                <Typography variant="body1" color="text.secondary">
+                  {t("auth.login_subtitle")}
+                </Typography>
+              </Stack>
+
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Stack spacing={2}>
+                  <Stack spacing={1}>
+                    <AppField
+                      control={control}
+                      name="email"
+                      label={t("common.email")}
+                      type="email"
+                      disabled={isLoading}
+                    />
+                    <AppField
+                      control={control}
+                      name="password"
+                      label={t("common.password")}
+                      type="password"
+                      disabled={isLoading}
+                    />
+                  </Stack>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    align="right"
+                  >
+                    <AppLink href={AppRoutes.FORGOT_PASSWORD}>
+                      {t("auth.forgot_password")}
+                    </AppLink>
+                  </Typography>
+                  <AppButton type="submit" isLoading={isLoading}>
+                    {t("auth.sign_in")}
+                  </AppButton>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    align="center"
+                  >
+                    {t("auth.dont_have_account")}{" "}
+                    <AppLink href={AppRoutes.SIGN_UP}>
+                      {t("auth.sign_up")}
+                    </AppLink>
+                  </Typography>
+                </Stack>
+              </form>
+            </Stack>
+          </CardContent>
+        </Card>
+      </Stack>
+    </Container>
+  );
+}
